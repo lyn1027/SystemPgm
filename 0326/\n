@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LEN 100 // 사용자 입력 최대 길이 정의
+
+int main() {
+    char inputBuffer[MAX_LEN];
+
+    printf("메시지를 입력하세요 (Enter로 종료): ");
+
+    // 키보드로부터 엔터 포함 한 줄 전체 읽기 fgets(변수명, 최대길이, 입력스트림)
+    if (fgets(inputBuffer, sizeof(inputBuffer), stdin) != NULL) {
+        
+        // 줄바꿈 문자('\n') 제거
+        // fgets는 엔터키값까지 배열에 저장하므로, 필요 시 제거 로직 추가
+        inputBuffer[strcspn(inputBuffer, "\n")] = '\0';
+
+        // 결과 출력
+        printf("\n[출력 결과]: %s\n", inputBuffer);
+    } else {
+        // 예외 처리: 입력 실패 시 사용자 안내
+        fprintf(stderr, "입력 오류가 발생했습니다.\n");
+        return 1;
+    }
+
+    return 0;
+}
