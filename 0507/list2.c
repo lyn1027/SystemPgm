@@ -12,7 +12,6 @@ char type(mode_t);
 char *perm(mode_t);
 void printStat(char*, char*, struct stat*);
 
-/* 디렉터리 내용을 자세히 리스트한다. */
 int main(int argc, char **argv)
 {
     DIR *dp;
@@ -22,31 +21,30 @@ int main(int argc, char **argv)
     char path[BUFSIZ+1];
 
     if (argc == 1)
-        dir = "."; // 현재 디렉터리를 대상으로
+        dir = ".";
     else
         dir = argv[1];
 
-    if ((dp = opendir(dir)) == NULL) // 디렉터리 열기
+    if ((dp = opendir(dir)) == NULL)
     {
         perror(dir);
         exit(1);
     }
 
-    while ((d = readdir(dp)) != NULL) { // 각 디렉터리 엔트리에 대해
+    while ((d = readdir(dp)) != NULL) {
 
-        sprintf(path, "%s/%s", dir, d->d_name); // 파일경로명 만들기
+        sprintf(path, "%s/%s", dir, d->d_name);
 
-        if (lstat(path, &st) < 0) // 파일 상태 정보 가져오기
+        if (lstat(path, &st) < 0)
             perror(path);
         else
-            printStat(path, d->d_name, &st); // 상태 정보 출력
+            printStat(path, d->d_name, &st);
     }
 
     closedir(dp);
     exit(0);
 }
 
-/* 파일 상태 정보를 출력 */
 void printStat(char *pathname, char *file, struct stat *st)
 {
     printf("%5ld ", st->st_blocks);
@@ -65,7 +63,6 @@ void printStat(char *pathname, char *file, struct stat *st)
     printf("%s\n", file);
 }
 
-/* 파일 타입을 반환 */
 char type(mode_t mode)
 {
     if (S_ISREG(mode))  return '-';
@@ -79,7 +76,6 @@ char type(mode_t mode)
     return '?';
 }
 
-/* 파일 접근권한을 반환 */
 char* perm(mode_t mode)
 {
     static char perms[10];
