@@ -10,7 +10,7 @@ if (nread > 0) {
 write(1, buffer, nread);
 exit(0);
 } else {
-fprintf(stderr, "오류 : 해당 링크 없음\n");
+fprintf(stderr, "오류 : 해당 링크 없음.\n");
 exit(1);
 }
 }
